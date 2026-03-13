@@ -9,12 +9,16 @@ const Tenant = require("./models/Tenant");
 const Complaint = require("./models/Complaint");
 const Payment = require("./models/Payment");
 const roomRoutes = require("./routes/roomRoutes");
+const tenantRoutes = require("./routes/tenantRoutes");
+const complaintRoutes = require("./routes/complaintRoutes");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use("/api", roomRoutes);
+app.use("/api", tenantRoutes);
+app.use("/api", complaintRoutes);
 
 // Test route
 app.get("/", (req, res) => {
