@@ -1,0 +1,80 @@
+.dashboard{
+  min-height:100vh;
+  text-align:center;
+  padding:60px 20px;
+  background:linear-gradient(135deg,#4e73df,#224abe);
+  color:white;
+}
+
+/* Title */
+
+.title{
+  font-size:42px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  font-size:18px;
+  margin-bottom:50px;
+  opacity:0.9;
+}
+
+/* Cards Grid */
+
+.cards{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:nowrap;
+}
+
+/* Card */
+
+.card{
+  background:rgba(255,255,255,0.95);
+  color:#333;
+  padding:35px 25px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  transition:all 0.35s ease;
+  cursor:pointer;
+  backdrop-filter:blur(5px);
+}
+
+.card:hover{
+  transform:translateY(-12px) scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,0.35);
+}
+
+/* Icon Circle */
+
+.icon{
+  width:70px;
+  height:70px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  color:white;
+}
+
+/* Icon Colors */
+
+.blue{
+  background:#4e73df;
+}
+
+.purple{
+  background:#9b59b6;
+}
+
+.orange{
+  background:#f39c12;
+}
+
+.green{
+  background:#2ecc71;
+}
