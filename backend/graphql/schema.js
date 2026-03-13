@@ -1,28 +1,23 @@
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLList } = require("graphql");
-const Room = require("../models/Room");
+const { GraphQLObjectType, GraphQLSchema } = require("graphql");
 
-const RoomType = new GraphQLObjectType({
-  name: "Room",
-  fields: () => ({
-    id: { type: GraphQLString },
-    room_number: { type: GraphQLString },
-    capacity: { type: GraphQLString },
-    rent: { type: GraphQLString }
-  })
-});
+const { roomQuery } = require("./queries/roomQuery");
+const roomMutation = require("./mutations/roomMutation");
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    rooms: {
-      type: new GraphQLList(RoomType),
-      resolve(parent, args) {
-        return Room.findAll();
-      }
-    }
+    ...roomQuery
+  }
+});
+
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    ...roomMutation
   }
 });
 
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: Mutation
 });
