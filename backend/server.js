@@ -4,6 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const sequelize = require("./config/database");   // import database connection
 const socketHandler = require("./sockets/socketHandler");
+const socketService = require("./sockets/socketService");
 
 const app = express();
 
@@ -20,6 +21,9 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 });
+
+// Initialize the Socket.io service for controllers
+socketService.init(io);
 
 // Attach Socket.io handler
 socketHandler(io);
