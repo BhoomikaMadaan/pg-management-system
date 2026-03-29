@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
+const { Server } = require("socket.io");
 const sequelize = require("./config/database");
 
 // GraphQL
@@ -19,10 +21,31 @@ const tenantRoutes = require("./routes/tenantRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
+// Sockets
+const socketHandler = require("./sockets/socketHandler");
+const socketService = require("./sockets/socketService");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.io
+const io = new Server(server, {
+    cors: {
+        origin: "*", // Adjust this to your frontend URL in production for security
+        methods: ["GET", "POST"]
+    }
+});
+
+// Initialize the Socket.io service for controllers
+socketService.init(io);
+
+// Attach Socket.io handler
+socketHandler(io);
 
 // REST API routes
 app.use("/api", roomRoutes);
@@ -38,26 +61,24 @@ app.use("/graphql", graphqlHTTP({
 
 // Test route
 app.get("/", (req, res) => {
-    res.send("PG Management System API Running");
+    res.send("PG Management System API Running with GraphQL and Socket.io");
 });
 
 const PORT = 5000;
 
 // Connect to database and sync tables
 sequelize.authenticate()
-.then(() => {
-    console.log("Database connected successfully");
-
-    return sequelize.sync();
-})
-.then(() => {
-    console.log("All tables created successfully");
-
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
+    .then(() => {
+        console.log("Database connected successfully");
+        return sequelize.sync();
+    })
+    .then(() => {
+        console.log("All tables created/synced successfully");
+        server.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("Database connection error:", err);
     });
 
-})
-.catch((err) => {
-    console.error("Database connection error:", err);
-});
