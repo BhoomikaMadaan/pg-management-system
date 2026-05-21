@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+<<<<<<< HEAD
 const http = require("http");
 const { Server } = require("socket.io");
 const sequelize = require("./config/database");
@@ -28,12 +29,16 @@ const userRoutes = require("./routes/userRoutes");
 // Sockets
 const socketHandler = require("./sockets/socketHandler");
 const socketService = require("./sockets/socketService");
+=======
+const sequelize = require("./config/database");   // import database connection
+>>>>>>> 5d189121379235303989f4c04ecdd57982fcc86e
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+<<<<<<< HEAD
 // Create HTTP server
 const server = http.createServer(app);
 
@@ -101,4 +106,24 @@ process.on("SIGTERM", () => {
         console.log("Server closed");
         process.exit(0);
     });
+=======
+// Test route
+app.get("/", (req, res) => {
+    res.send("PG Management System API Running");
+});
+
+// Test database connection
+sequelize.authenticate()
+    .then(() => {
+        console.log("Database connected successfully");
+    })
+    .catch((err) => {
+        console.error("Database connection error:", err);
+    });
+
+const PORT = 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+>>>>>>> 5d189121379235303989f4c04ecdd57982fcc86e
 });

@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+<<<<<<< HEAD
 require("dotenv").config();
 
 const sequelize = new Sequelize(
@@ -25,5 +26,12 @@ sequelize.authenticate()
     .catch((err) => {
         console.log("❌ Database connection failed:", err.message);
     });
+=======
+
+const sequelize = new Sequelize("pg_management", "root", "bunnyhoney123@", {
+    host: "localhost",
+    dialect: "mysql"
+});
+>>>>>>> 5d189121379235303989f4c04ecdd57982fcc86e
 
 module.exports = sequelize;
